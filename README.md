@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Focus-Everything%20About%20Hacking-red" />
+  <img src="https://img.shields.io/badge/Focus-Just%20Hack-red" />
   <img src="https://img.shields.io/badge/Level-Entry%20%2F%20Junior-orange" />
   <img src="https://img.shields.io/badge/Status-Actively%20Learning-success" />
 </p>
