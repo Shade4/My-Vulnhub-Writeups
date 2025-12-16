@@ -9,7 +9,7 @@
 
 <p align="center">
   <b>Hands-on penetration testing portfolio</b><br>
-  VulnHub • TryHackMe • Hack The Box (labs only)
+  VulnHub • TryHackMe • Hack The Box (and......other one's as well)
 </p>
 
 <p align="center">
