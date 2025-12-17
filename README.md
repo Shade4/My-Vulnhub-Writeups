@@ -45,6 +45,7 @@ Open ports:
 
 * **80/tcp** – HTTP
 * **12380/tcp** – Apache HTTPD 2.4.18
+![nmap](images\nmap.png)
 
 ---
 
