@@ -57,7 +57,7 @@ netdiscover -i eth0
 
 This scans the local network and identifies connected devices.
 
-📸 *Screenshot: netdiscover output*
+![netdiscover](images/1netdiscover.png)
 
 ---
 
@@ -69,7 +69,7 @@ nmap -sS -T4 192.168.xxx.xxx
 
 Results show an active **HTTP service**, indicating a web-based target.
 
-📸 *Screenshot: nmap scan*
+![nmap](images/2nmap.png)
 
 ---
 
@@ -79,7 +79,7 @@ Results show an active **HTTP service**, indicating a web-based target.
 
 Opening the target IP in the browser displays a **Mr. Robot themed website**.
 
-📸 *Screenshot: Web interface*
+![WI](images/3interface.png)
 
 ---
 
@@ -94,7 +94,7 @@ Nikto identifies:
 * Use of **WordPress**
 * Presence of **robots.txt**
 
-📸 *Screenshot: Nikto scan*
+![nikto](images/4nikto.png)
 
 ---
 
@@ -108,10 +108,14 @@ http://TARGET_IP/robots.txt
 
 Contents reveal:
 
+![firstone](images/5firstflag.png)
+
 * `fsocity.dic` (dictionary file)
 * `key-1-of-3.txt`
 
 Download both:
+
+![files](images/6filesforfflag.png)
 
 ```bash
 wget http://TARGET_IP/fsocity.dic
@@ -163,7 +167,7 @@ Steps:
 4. Enable intercept **after page loads**
 5. Submit dummy credentials
 
-📸 *Screenshot: Burp intercepted request*
+![burp](images/8burpsuite.png)
 
 Captured parameters:
 
@@ -202,7 +206,7 @@ wpscan --url http://TARGET_IP \
 
 WPScan successfully reveals the password.
 
-📸 *Screenshot: WPScan credentials*
+![wpscan](images/13wpscanP.png)
 
 Login to WordPress Admin.
 
@@ -307,6 +311,8 @@ cat key-3-of-3.txt
 ```
 
 🚩 **Third and final flag captured**
+
+![final](images/21nmapinter.png)
 
 ---
 
