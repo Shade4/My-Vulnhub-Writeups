@@ -1,112 +1,207 @@
 ```text
-██████╗ ███████╗███╗   ██╗████████╗███████╗███████╗████████╗
-██╔══██╗██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
-██████╔╝█████╗  ██╔██╗ ██║   ██║   █████╗  ███████╗   ██║   
-██╔═══╝ ██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ╚════██║   ██║   
-██║     ███████╗██║ ╚████║   ██║   ███████╗███████║   ██║   
-╚═╝     ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝   ╚═╝   
+██╗███╗   ██╗███████╗██╗███╗   ██╗██╗████████╗██╗   ██╗
+██║████╗  ██║██╔════╝██║████╗  ██║██║╚══██╔══╝╚██╗ ██╔╝
+██║██╔██╗ ██║█████╗  ██║██╔██╗ ██║██║   ██║    ╚████╔╝
+██║██║╚██╗██║██╔══╝  ██║██║╚██╗██║██║   ██║     ╚██╔╝  
+██║██║ ╚████║██║     ██║██║ ╚████║██║   ██║      ██║   
+╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝      ╚═╝   
 ```
 
-<p align="center">
-  <b>Hands-on penetration testing portfolio</b><br>
-  VulnHub • TryHackMe • Hack The Box (and......other one's as well)
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Focus-Just%20Hack-red" />
-  <img src="https://img.shields.io/badge/Level-Entry%20%2F%20Junior-orange" />
-  <img src="https://img.shields.io/badge/Status-Actively%20Learning-success" />
-</p>
+![OS](https://img.shields.io/badge/OS-Linux-green)
+![Type](https://img.shields.io/badge/Type-VulnHub-red)
+![Theme](https://img.shields.io/badge/Theme-Avengers-purple)
+![Status](https://img.shields.io/badge/Status-All%20Stones%20Collected-success)
 
 ---
 
-## 🧠 About This Repository
+## 🧠 Machine Information
 
-This repository is my **personal penetration testing portfolio**.
-
-It contains **detailed, hands-on writeups** of intentionally vulnerable lab machines. Each walkthrough documents not just *what* worked, but *why* it worked — including failed attempts, clues, and decision-making.
-
-All work here is performed in **legal lab environments only**.
+| Item        | Value                            |
+| ----------- | -------------------------------- |
+| Name        | Infinity Stones                  |
+| Platform    | VulnHub                          |
+| Attacker OS | Kali Linux                       |
+| Objective   | Collect all Infinity Stone flags |
 
 ---
 
-## 🗂️ Repository Structure
+## 🔍 Reconnaissance
 
-This repository uses **branches** to keep each machine isolated and clean.
+Initial discovery was performed by scanning the local network:
+
+```bash
+nmap 192.168.23.1-255
+```
+
+The target machine exposed both **HTTP** and **HTTPS** services. A full scan was executed:
+
+```bash
+nmap -p- -O -A -sV <TARGET_IP>
+```
+
+During enumeration, the **Mind Stone** flag was discovered directly on the homepage:
 
 ```text
-main        → Portfolio overview (you are here)
-matrix      → VulnHub: Matrix writeup
-steplar-1   → VulnHub: Steplar 1 writeup
+MINDSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
 ```
-
-💊 **The truth lies beyond this branch.**
-Switch branches to enter individual writeups.
+![Mind Stone](images/mind.png)
 
 ---
 
-## 🧪 What Each Writeup Includes
+## 🌐 Web Enumeration
 
-Every machine follows a consistent professional structure:
+Manual browsing revealed an **Avengers-themed quiz**. Interpreting the answers as binary values (True = 1, False = 0) led to a new page.
 
-* 🔍 Reconnaissance & Enumeration
-* 🌐 Web & Service Analysis
-* 🔐 Exploitation Techniques
-* ⬆️ Privilege Escalation
-* 🏁 Root / Flag Discovery
-* ⚠️ Ethical & Legal Disclaimer
+A `hint.txt` file was discovered containing **Brainfuck code**.
 
-This mirrors real-world penetration testing methodology.
-
----
-
-## 🛠️ Tools & Techniques
+After decoding, the output revealed credentials:
 
 ```text
-Nmap • Gobuster • FFUF • Nikto • Hydra • WPScan
-Metasploit • msfvenom • Netcat • Linux PrivEsc
+admin : avengers
 ```
 
-Along with:
+---
 
-* Encoding & obfuscation analysis
-* Web application exploitation
-* Credential attacks
-* Kernel & misconfiguration privilege escalation
+## 📁 Directory Discovery
+
+Directory brute-forcing uncovered several paths:
+
+```text
+/images
+/img
+/wifi
+```
+
+The `/img` directory contained an image related to the **Space Stone**. Using `strings` on the image revealed:
+
+```text
+SPACESTONE:{74E57403424607145B9B77809DEB49D0}
+```
+![Space Stone](images/space.png)
 
 ---
 
-## 🎯 Skills Demonstrated
+## 📡 Wireless & Reality Stone
 
-* Network & service enumeration
-* Web application testing
-* Linux privilege escalation
-* Exploit research & adaptation
-* Clear technical documentation
-* Ethical hacking practices
+The `/wifi` directory exposed two files:
 
----
+* `pwd.txt`
+* `reality.cap`
 
-## 📌 How to Navigate
+Analysis of these files led to another hidden page, resulting in the **Reality Stone** flag.
 
-1. Click the **branch selector** (top-left on GitHub)
-2. Choose a machine name
-3. Open `README.md`
-4. Follow the walkthrough from recon to root
+![Reality Stone](images/reality.png)
 
----
+```text
+REALITYSTONE:{4542E4C233F26B4FAF6B5F3FED24280C}
+```
 
-## ⚠️ Legal Disclaimer
-
-All content in this repository is created **strictly for educational purposes**.
-
-These machines are designed to be vulnerable and are hosted in controlled lab environments such as VulnHub, TryHackMe, and Hack The Box (retired machines).
-
-🚫 **Do not attempt these techniques on systems you do not own or have explicit permission to test.**
+At this stage, three stones were collected.
 
 ---
 
-## 👤 Author
+## ⚔️ Exploitation (Jenkins)
+
+Using the previously discovered credentials, access was gained to a Jenkins service.
+
+Metasploit was used to exploit the Jenkins instance:
+
+```text
+Exploit: Jenkins RCE
+Payload: linux/x86/meterpreter/reverse_tcp
+```
+
+Successful exploitation resulted in a **Meterpreter shell**.
+
+---
+
+## ⏳ Time Stone
+
+Post-exploitation enumeration revealed cryptographic hashes and an executable script.
+
+Running the script yielded the **Time Stone** flag:
+
+```text
+TIMESTONE:{141BC86DFD5C40E3CC37219C18D471CA}
+```
+![Time Stone](images/time.png)
+
+---
+
+## 💥 Power Stone
+
+A KeePass database file `morag.kdbx` was discovered.
+
+The file hash was extracted and cracked using **John the Ripper**, revealing the password:
+
+```text
+princesa
+```
+
+Using `kdbxcli`, the database was opened and the **Power Stone** flag was recovered:
+
+![Power Stone](images/power.png)
+
+```text
+POWERSTONE:{EDDF140F156862C9B494C0B767DCD412}
+```
+
+Additional credentials were decoded from Base64:
+
+```text
+morag : yondu
+```
+
+---
+
+## ⬆️ Privilege Escalation
+
+The user lacked permission to execute `/bin/su`. Privilege escalation was achieved via a misconfigured **FTP sudo rule**.
+
+```bash
+sudo ftp
+!
+```
+
+This spawned a **root shell**.
+
+---
+
+## 🧿 Soul Stone (Final Flag)
+
+Inside the root directory, the final flag was located:
+
+![Soul Stone](images/soul.png)
+
+```text
+SOULSTONE:{56F06B4DAC14CE346998483989ABFF16}
+```
+
+All Infinity Stones successfully collected.
+
+---
+
+## 🏁 Conclusion
+
+This machine tested a wide range of skills:
+
+* Creative web-based puzzles
+* Encoding & decoding techniques
+* Image forensics
+* Jenkins exploitation
+* KeePass database cracking
+* Sudo misconfiguration privilege escalation
+
+---
+
+## ⚠️ Disclaimer
+
+This writeup is for **educational purposes only** and was performed on a deliberately vulnerable lab machine.
+
+---
+
+### 👤 Author
 
 **Jai Agrawal**
 Cybersecurity | Penetration Testing | CTFs
+
