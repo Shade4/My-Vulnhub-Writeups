@@ -110,3 +110,9 @@ These machines are designed to be vulnerable and are hosted in controlled lab en
 
 **Jai Agrawal**
 Cybersecurity | Penetration Testing | CTFs
+
+
+
+**Finally here are the Machines:-**
+
+1. [Infinity-Stones](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Infinity-Stones)
