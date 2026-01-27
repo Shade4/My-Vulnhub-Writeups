@@ -105,6 +105,13 @@ These machines are designed to be vulnerable and are hosted in controlled lab en
 🚫 **Do not attempt these techniques on systems you do not own or have explicit permission to test.**
 
 ---
+**Well here are the Machines:-**
+
+1. [Infinity-Stones](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Infinity-Stones)
+
+
+---
+
 
 ## 👤 Author
 
