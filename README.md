@@ -38,6 +38,8 @@ This repository uses **branches** to keep each machine isolated and clean.
 main        → Portfolio overview (you are here)
 matrix      → VulnHub: Matrix writeup
 steplar-1   → VulnHub: Steplar 1 writeup
+
+Or you can just scroll below and see the machines those writeups i have completed or are in progress🙂
 ```
 
 💊 **The truth lies beyond this branch.**
