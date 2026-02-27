@@ -18,10 +18,12 @@
 
 | Item        | Value                  |
 | ----------- | ---------------------- |
-| Name        | Steplar 1              |
+| Name        | Stapler 1              |
 | Platform    | VulnHub                |
 | Attacker OS | Parrot OS / Kali Linux |
 | Goal        | Root the machine       |
+
+Try this machine yourself: https://www.vulnhub.com/entry/stapler-1,150/
 
 ---
 
