@@ -28,7 +28,7 @@ This Box does not contains any flags but what it does contain are the real world
 
 **Directory Disclosure - robots.txt**
 ```
-
+http://192.168.23.139/robots.txt
 ```
 
 ---
