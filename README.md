@@ -20,6 +20,8 @@ The objective is to collect **3 flags** by exploiting misconfigurations, weak cr
 
 > ⚠️ **Educational Use Only** — This machine is intentionally vulnerable and must only be tested in a lab environment.
 
+You can try it yourself: https://www.vulnhub.com/entry/mr-robot-1,151/
+
 ---
 
 ## 🧠 Lab Setup
