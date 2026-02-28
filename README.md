@@ -174,4 +174,4 @@ UltimateLAMP is designed to:
 - Serve as a learning platform for students and professionals
 - Allow development and testing inside an isolated VM environment
 
-After exploring it a little bit i found that all the usernames are "admin" and all passwords are "dolphin" that were used in this since it is a product list machine and not a penetration testing target.
+After exploring it a little bit i found that all the usernames are "admin" and all passwords are "dolphin" that were used in this since it is a product list machine and not a penetration testing target. It could've been used as a target if it have other services running in it other than 80 - http. I did tried some SQL Injection and IDOR in some places and used the dirb tool as well for directory disclore and it have a vast about of different pages, tools, product and libraries in it.
