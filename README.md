@@ -116,7 +116,7 @@ These machines are designed to be vulnerable and are hosted in controlled lab en
 3. [Mr. Robot-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Mr.-Robot)
 4. [Stapler-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Steplar-1)
 5. [Badstore: 1.2.3](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Badstore) (in progress)
-6. [UltimateLAMP: 0.2](https://github.com/Shade4/My-Vulnhub-Writeups/tree/UltimateLAMP-0.2) (in progress)
+6. [UltimateLAMP: 0.2](https://github.com/Shade4/My-Vulnhub-Writeups/tree/UltimateLAMP-0.2)
 
 ---
 
