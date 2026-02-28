@@ -23,6 +23,8 @@
 
 This Box does not contains any flags but what it does contain are the real world system vulnerabilities which i am going to exploit. In this repo you are going to see some machines which are not made for CTF but does contain some unnecessary open ports that means an open vulnerability so i am going to try and exploit their services and.... we are going to do some web enumeration and learn about LAMP and different things as well.
 
+You can download it from here: https://www.vulnhub.com/entry/badstore-123,41/
+
 ---
 <h2>Reconnaissance 🔎</h2>
 
