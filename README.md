@@ -24,7 +24,7 @@
 ![OS](https://img.shields.io/badge/OS-Linux-green)
 ![Type](https://img.shields.io/badge/Type-VulnHub-red)
 ![Format](https://img.shields.io/badge/Format-Virtual%20Machine%20(VMware)-purple)
-![Status](https://img.shields.io/badge/Status-Exploring-blue)
+![Status](https://img.shields.io/badge/Status-Explored-blue)
 
 ---
 
