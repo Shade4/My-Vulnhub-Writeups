@@ -111,7 +111,7 @@ These machines are designed to be vulnerable and are hosted in controlled lab en
 ---
 **Well here are the Machines:-**
 
-| Number   |    Tier   |
+| Number   |    Machines   |
 |-----|----------|
 | 1.  | [HA: Infinity-Stones](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Infinity-Stones)  |
 | 2.  | [Matrix-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Matrix)  |
