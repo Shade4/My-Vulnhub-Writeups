@@ -111,14 +111,14 @@ These machines are designed to be vulnerable and are hosted in controlled lab en
 ---
 **Well here are the Machines:-**
 
-| Number   |    Machines   |
-|-----|----------|
-| 1.  | [HA: Infinity-Stones](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Infinity-Stones)  |
-| 2.  | [Matrix-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Matrix)  |
-| 3.  | [Mr. Robot-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Mr.-Robot)  |
-| 4.  | [Stapler-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Steplar-1)  |
-| 5.  | [Badstore: 1.2.3](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Badstore) (in progress)  |
-| 6.  | [UltimateLAMP: 0.2](https://github.com/Shade4/My-Vulnhub-Writeups/tree/UltimateLAMP-0.2)  |
+| Number   |    Machines   |  Operating System  |  Type  |
+|-----|----------|------|------|
+| 1.  | [HA: Infinity-Stones](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Infinity-Stones)  |  Linux  |  Web Application  |
+| 2.  | [Matrix-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Matrix)  |  Linux  | Web Application  |
+| 3.  | [Mr. Robot-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Mr.-Robot)  |  Linux  |  Web Application |
+| 4.  | [Stapler-1](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Steplar-1)  |  Linux  |  Web Application  |
+| 5.  | [Badstore: 1.2.3](https://github.com/Shade4/My-Vulnhub-Writeups/tree/Badstore) (in progress)  |  Linux  |  Web Application  |
+| 6.  | [UltimateLAMP: 0.2](https://github.com/Shade4/My-Vulnhub-Writeups/tree/UltimateLAMP-0.2)  |  Linux  |  Web Application  |
 
 ---
 
